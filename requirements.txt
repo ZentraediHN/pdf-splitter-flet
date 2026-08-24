@@ -1,3 +1,4 @@
 flet
+flet-desktop
 pymupdf
 pyinstaller
