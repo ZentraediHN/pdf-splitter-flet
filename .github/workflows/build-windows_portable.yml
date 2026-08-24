@@ -26,7 +26,7 @@ jobs:
 
     - name: Build Portable with PyInstaller
       run: |
-        pyinstaller --noconsole --onefile --name "PDFSplitter" --collect-all flet --collect-all flet_desktop pdf-splitter-flet_V.0.3.7.py
+        pyinstaller --onefile --name "PDFSplitter" --collect-all flet --collect-all flet_desktop pdf-splitter-flet_V.0.3.7.py
 
     - name: Upload Portable Executable Artifact
       uses: actions/upload-artifact@v4
