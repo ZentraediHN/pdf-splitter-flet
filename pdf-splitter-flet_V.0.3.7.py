@@ -37,6 +37,17 @@ import time
 import flet as ft
 import pymupdf as fitz
 
+from pathlib import Path
+
+# Limpiar caché conflictiva de Flet para evitar WinError 183 en Windows
+try:
+  client_path = Path.home() / ".flet" / "client"
+  if client_path.exists():
+    for p in client_path.glob("flet-desktop-full-*"):
+      if p.is_dir():
+        shutil.rmtree(p, ignore_errors=True)
+except Exception:
+  pass
 
 class Point:
     """Clase auxiliar para el motor adaptativo de búsqueda"""
