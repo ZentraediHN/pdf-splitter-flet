@@ -1,4 +1,4 @@
-name: Build Windows Executable
+name: Build Windows Installer (Setup.exe)
 
 on:
   push:
@@ -6,7 +6,7 @@ on:
   workflow_dispatch:
 
 jobs:
-  build:
+  build-installer:
     runs-on: windows-latest
 
     steps:
@@ -24,12 +24,17 @@ jobs:
         python -m pip install --upgrade pip
         pip install -r requirements.txt
 
-    - name: Build with PyInstaller
+    - name: Build with Flet Pack
       run: |
-        pyinstaller --noconsole --onedir --name "PDFSplitter" pdf-splitter-flet_V.0.3.7.py
+        flet pack pdf-splitter-flet_V.0.3.7.py --name "PDFSplitter" --onedir --noconsole
 
-    - name: Upload artifact
+    - name: Compile Inno Setup Script
+      uses: Minionguyjpro/Inno-Setup-Action@v1.2.9
+      with:
+        path: installer.iss
+
+    - name: Upload Installer Artifact
       uses: actions/upload-artifact@v4
       with:
-        name: PDFSplitter-Windows
-        path: dist/PDFSplitter/
+        name: PDFSplitter-Windows-Installer
+        path: installer_output/PDFSplitter_Installer_v0.3.7.exe
